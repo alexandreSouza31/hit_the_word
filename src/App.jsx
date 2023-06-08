@@ -2,12 +2,11 @@
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-       
-    </>
+    <div className='App'>
+       <h1>Hit the Word</h1>
+    </div>
   )
 }
 

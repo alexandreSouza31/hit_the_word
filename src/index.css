@@ -1,0 +1,17 @@
+:root{
+    --global-color1:#333;
+    --global-color2:cornflowerblue;
+    --global-background-color:whitesmoke;
+}
+
+html,body{
+    height: 100%;
+}
+
+body{
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 0;
+    background: var(--global-background-color);
+    color: var(--global-color1);
+}
