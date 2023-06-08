@@ -1,0 +1,8 @@
+.start_container h1{
+    font-size: 3rem;
+}
+
+.start_container p{
+    margin-bottom: 2rem;
+    color: cornflowerblue;
+}
