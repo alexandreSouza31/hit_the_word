@@ -22,7 +22,39 @@ function App() {
   const [gameStage, setGameState] = useState(stages[0].name);//inicio no start
   const [words] = useState(wordsList);
 
+  const [pickedWord, setPickedWord] = useState("");
+  const [pickedCategory, setPickedCategory] = useState("");
+  const [letters, setLetters] = useState([]);
+
+  const pickWordAndCategory = () => {
+    const categories = Object.keys(words);
+    const category = categories[Math.floor(Math.random() * Object.keys(categories).length)];
+    /* irá receber um numero aleatório de zero até o número de categorias
+    que eu tenho. Como o Math.random dá um número quebrado, nesse caso vou
+    arredondar pra baixo usando o floor. */
+
+    console.log(category);
+
+    const word = words[category][Math.floor(Math.random() * words[category].length)];
+    // com isso eu terei a palavra aleatória dentro da sua categoria
+    console.log(word);
+
+    return {category, word};//retorno como objeto pra desestruturar em objeto
+  }
+
   const startGame = () => {
+    const {category,word}=pickWordAndCategory();
+
+    //transformar array em letras
+    let wordLetters = word.split("");//ele vai separar a palavra por todas as letras.
+    wordLetters=wordLetters.map((letter)=>letter.toLowerCase())/*caso no banco haja palavras
+    diferenciadas por maiúsculas e minúsculas já padronizo pra serem todas minúsculas aqui!*/
+    console.log(wordLetters);
+
+    setPickedWord(word);
+    setPickedCategory(category);
+    setLetters(letters);
+
     setGameState(stages[1].name);
   }
   
