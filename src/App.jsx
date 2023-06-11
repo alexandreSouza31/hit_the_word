@@ -44,15 +44,15 @@ function App() {
     // com isso eu terei a palavra aleatória dentro da sua categoria
     console.log(word);
 
-    return {category, word};//retorno como objeto pra desestruturar em objeto
+    return { category, word };//retorno como objeto pra desestruturar em objeto
   }
 
   const startGame = () => {
-    const {category,word}=pickWordAndCategory();
+    const { category, word } = pickWordAndCategory();
 
     //transformar array em letras
     let wordLetters = word.split("");//ele vai separar a palavra por todas as letras.
-    wordLetters=wordLetters.map((letter)=>letter.toLowerCase())/*caso no banco haja palavras
+    wordLetters = wordLetters.map((letter) => letter.toLowerCase())/*caso no banco haja palavras
     diferenciadas por maiúsculas e minúsculas já padronizo pra serem todas minúsculas aqui!*/
     console.log(wordLetters);
 
@@ -62,7 +62,7 @@ function App() {
 
     setGameState(stages[1].name);
   }
-  
+
   const verifyLetter = (letter) => {
     const standardizeLetter = letter.toLowerCase();
 
@@ -74,27 +74,29 @@ function App() {
     //inclui letra ou perde uma chance
     if (letters.includes(standardizeLetter)) {
       setGuessedLetters((actualGuessedLetters) => [
-        ...actualGuessedLetters,standardizeLetter
+        ...actualGuessedLetters, standardizeLetter
       ])
+    } else {
+      setWrongLetters((actualWrongLetters) => [
+        ...actualWrongLetters, standardizeLetter
+      ])
+      setGuesses((actualGuesses) => actualGuesses - 1)
     }
-    setWrongLetters((actualWrongLetters) => [
-      ...actualWrongLetters,standardizeLetter
-    ])
+    
+}
 
-  }
-  
-  console.log(guessedLetters);
-  console.log(wrongLetters);
+console.log(guessedLetters);
+console.log(wrongLetters);
 
-  const retry = () => {
-    setGameState(stages[0].name);
-  }
+const retry = () => {
+  setGameState(stages[0].name);
+}
 
-  return (
-    <div className='App'>
-      {gameStage === "start" && <StartScreen startGame={ startGame} />}
-      {gameStage === "game" &&
-        <Game
+return (
+  <div className='App'>
+    {gameStage === "start" && <StartScreen startGame={startGame} />}
+    {gameStage === "game" &&
+      <Game
         verifyLetter={verifyLetter}
         pickedWord={pickedWord}
         pickedCategory={pickedCategory}
@@ -103,10 +105,10 @@ function App() {
         wrongLetters={wrongLetters}
         guesses={guesses}
         score={score}
-        />}
-      {gameStage === "end" && <GameOver retry={retry} />}
-    </div>
-  )
+      />}
+    {gameStage === "end" && <GameOver retry={retry} />}
+  </div>
+)
 }
 
 export default App
