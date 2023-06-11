@@ -1,11 +1,11 @@
 import "./StartScreen.css";
 
-const StartScreen = ({startGame}) => {
+const StartScreen = ({startGame}) => {    
     return (
         <div className="start_container">
             <h1>Hit the Word</h1>
             <p>Está preparado pro desafio?</p>
-            <button onClick={startGame}>Começar jogo</button>
+            <button autoFocus  onClick={startGame}>Começar jogo</button>
         </div>
     )
 }

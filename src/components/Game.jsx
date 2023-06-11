@@ -49,6 +49,7 @@ const Game = ({ verifyLetter, pickedWord, pickedCategory, letters, guessedLetter
                             onChange={(e) => setLetter(e.target.value)}
                             value={letter}
                             ref={letterInputRef}//como se eu tivesse selecionado esse elemento no dom
+                            autoFocus
                         />
                         <button>Jogar!</button>
                     </form>
