@@ -36,6 +36,7 @@
     border: 3px solid var(--global-color1);
     height: 2.5rem;
     width: 2.5rem;
+    margin: 2px;
     text-transform: uppercase;
     background-color: var(--global-color3);
     color: var(--global-color4);
