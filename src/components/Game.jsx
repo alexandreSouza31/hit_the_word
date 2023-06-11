@@ -13,13 +13,21 @@ const Game = ({ endGame }) => {
             <div className="word_container">
                 <span className="letter">A</span>
                 <span className="blank_square"></span>
+                <span className="letter">A</span>
+                <span className="blank_square"></span>
+                <span className="letter">A</span>
+                <span className="blank_square"></span>
+                <span className="letter">A</span>
+                <span className="blank_square"></span>
             </div>
             <div className="letter_container">
                 <p>Tente adivinhar uma letra da palavra:</p>
+                <div>
                 <form>
                     <input type="text" name="letter" maxLength="1" required />
                     <button>Jogar!</button>
                 </form>
+                </div>
             </div>
             <div className="wrong_letters_container">
                 <p>Letras já utilizadas:</p>
