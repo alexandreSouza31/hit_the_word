@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./Game.css";
 
 const Game = ({ verifyLetter, pickedWord, pickedCategory, letters, guessedLetters, wrongLetters, guesses, score }) => {
-    
+    const [letter, setLetter] = useState("");
+
+    const letterInputRef = useRef(null);//o useRef cria uma referência em algum lugar, como se fosse o DOM
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        verifyLetter(letter);//disparo a função com a letra
+
+        setLetter("");//deixo vazio após utilizar
+        letterInputRef.current.focus();
+    }
+
     return (
         <div className="game_container">
             <p className="points">
@@ -29,21 +40,24 @@ const Game = ({ verifyLetter, pickedWord, pickedCategory, letters, guessedLetter
             <div className="letter_container">
                 <p>Tente adivinhar uma letra da palavra:</p>
                 <div>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <input
                             type="text"
-                            name="letter" 
-                            maxLength="1" 
+                            name="letter"
+                            maxLength="1"
                             required
-                            />
+                            onChange={(e) => setLetter(e.target.value)}
+                            value={letter}
+                            ref={letterInputRef}//como se eu tivesse selecionado esse elemento no dom
+                        />
                         <button>Jogar!</button>
                     </form>
                 </div>
             </div>
             <div className="wrong_letters_container">
                 <p>Letras já utilizadas:</p>
-                {wrongLetters.map((letter,i) => (
-                    
+                {wrongLetters.map((letter, i) => (
+
                     <span key={i}>{letter},</span>
                 ))}
             </div>
