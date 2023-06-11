@@ -63,3 +63,20 @@
     width: 1rem;
     margin-right: 20px;
 }
+
+@media screen and (min-width:720px) {
+    .word_container {
+        margin: 1.5rem;
+        padding: 1.5rem;
+        border: 20px solid var(--global-color2);
+    }
+
+    .letter,
+    .blank_square {
+        font-size: 70px;
+        line-height: 1.5;
+        border: 3px solid var(--global-color1);
+        height: 5rem;
+        width: 5rem;
+    }
+}
