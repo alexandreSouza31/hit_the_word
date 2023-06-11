@@ -1,5 +1,5 @@
 //hooks
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 //css
 import './App.css'
@@ -82,13 +82,27 @@ function App() {
       ])
       setGuesses((actualGuesses) => actualGuesses - 1)
     }
-    
-}
+  }
+  
+  const clearLetterStates = () => {
+    setGuessedLetters([])
+    setWrongLetters([]);
+  }
+
+  useEffect(() => {
+    if (guesses <= 0) {//termina o jogo caso terminem as chances
+
+      clearLetterStates();
+      setGameState(stages[2].name);
+      
+    }
+  }, [guesses]);//o elemento a ser observado será o guesses
 
 console.log(guessedLetters);
 console.log(wrongLetters);
 
-const retry = () => {
+  const retry = () => {
+    setGuesses(3);
   setGameState(stages[0].name);
 }
 
