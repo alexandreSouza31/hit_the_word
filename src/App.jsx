@@ -64,9 +64,27 @@ function App() {
   }
   
   const verifyLetter = (letter) => {
-    console.log(letter)
-    //setGameState(stages[2].name);
+    const standardizeLetter = letter.toLowerCase();
+
+    //a letra já foi utilizada?
+    if (guessedLetters.includes(standardizeLetter) || wrongLetters.includes(standardizeLetter)) {
+      return;
+    }
+
+    //inclui letra ou perde uma chance
+    if (letters.includes(standardizeLetter)) {
+      setGuessedLetters((actualGuessedLetters) => [
+        ...actualGuessedLetters,standardizeLetter
+      ])
+    }
+    setWrongLetters((actualWrongLetters) => [
+      ...actualWrongLetters,standardizeLetter
+    ])
+
   }
+  
+  console.log(guessedLetters);
+  console.log(wrongLetters);
 
   const retry = () => {
     setGameState(stages[0].name);
