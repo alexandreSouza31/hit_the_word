@@ -1,5 +1,5 @@
 //hooks
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 //css
 import './App.css'
@@ -31,39 +31,37 @@ function App() {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
   const [guesses, setGuesses] = useState([guessesQty]);//terá 3 tentativas, mas posso mudar
-  const [score, setScore] = useState([0]);
+  const [score, setScore] = useState(0);
 
-  const pickWordAndCategory = () => {
+  const pickWordAndCategory = useCallback(() => {
     const categories = Object.keys(words);
     const category = categories[Math.floor(Math.random() * Object.keys(categories).length)];
     /* irá receber um numero aleatório de zero até o número de categorias
     que eu tenho. Como o Math.random dá um número quebrado, nesse caso vou
     arredondar pra baixo usando o floor. */
 
-    console.log(category);
-
     const word = words[category][Math.floor(Math.random() * words[category].length)];
     // com isso eu terei a palavra aleatória dentro da sua categoria
-    console.log(word);
 
     return { category, word };//retorno como objeto pra desestruturar em objeto
-  }
+  },[words])
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
+    clearLetterStates();
+
     const { category, word } = pickWordAndCategory();
 
     //transformar array em letras
     let wordLetters = word.split("");//ele vai separar a palavra por todas as letras.
     wordLetters = wordLetters.map((letter) => letter.toLowerCase())/*caso no banco haja palavras
     diferenciadas por maiúsculas e minúsculas já padronizo pra serem todas minúsculas aqui!*/
-    console.log(wordLetters);
 
     setPickedWord(word);
     setPickedCategory(category);
     setLetters(wordLetters);
 
     setGameState(stages[1].name);
-  }
+  },[pickWordAndCategory])
 
   const verifyLetter = (letter) => {
     const standardizeLetter = letter.toLowerCase();
@@ -82,7 +80,7 @@ function App() {
       setWrongLetters((actualWrongLetters) => [
         ...actualWrongLetters, standardizeLetter
       ])
-      setGuesses((actualGuesses) => actualGuesses - 1)
+      setGuesses((actualGuesses) => actualGuesses - 1);
     }
   }
   
@@ -91,6 +89,7 @@ function App() {
     setWrongLetters([]);
   }
 
+  //se as chances terminaram
   useEffect(() => {
     if (guesses <= 0) {//termina o jogo caso terminem as chances
 
@@ -100,29 +99,42 @@ function App() {
     }
   }, [guesses]);//o elemento a ser observado será o guesses
 
-console.log(guessedLetters);
-console.log(wrongLetters);
+
+  //se acertou a palavra
+  useEffect(() => {
+    const uniqueLetters = [... new Set(letters)];/*array de letras únicas.
+    usuário não precisa digitar 2 vezes a mesma letra na palavra*/
+
+    //condição de vitória
+    if (guessedLetters.length === uniqueLetters.length && gameStage===stages[1].name) {
+      setScore((actualScore) => actualScore += 100);
+      startGame();
+    }
+
+  },[guessedLetters,letters,startGame])
 
   const retry = () => {
     setGuesses(guessesQty);
-  setGameState(stages[0].name);
+    setGameState(stages[0].name);
+    setScore(0)
 }
 
 return (
   <div className='App'>
+
     {gameStage === "start" && <StartScreen startGame={startGame} />}
     {gameStage === "game" &&
       <Game
-        verifyLetter={verifyLetter}
-        pickedWord={pickedWord}
-        pickedCategory={pickedCategory}
-        letters={letters}
-        guessedLetters={guessedLetters}
-        wrongLetters={wrongLetters}
-        guesses={guesses}
-        score={score}
+      verifyLetter={verifyLetter}
+      pickedWord={pickedWord}
+      pickedCategory={pickedCategory}
+      letters={letters}
+      guessedLetters={guessedLetters}
+      wrongLetters={wrongLetters}
+      guesses={guesses}
+      score={score}
       />}
-    {gameStage === "end" && <GameOver retry={retry} />}
+    {gameStage === "end" && <GameOver retry={retry} score={score} />}
   </div>
 )
 }
