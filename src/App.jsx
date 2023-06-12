@@ -18,7 +18,7 @@ const stages = [
   { id: 3, name: "end" },
 ];
 
-const guessesQty = 3;
+const guessesQty = 5;
 
 function App() {
   const [gameStage, setGameState] = useState(stages[0].name);//inicio no start
@@ -44,7 +44,8 @@ function App() {
     // com isso eu terei a palavra aleatória dentro da sua categoria
 
     return { category, word };//retorno como objeto pra desestruturar em objeto
-  },[words])
+  }, [words])
+  
 
   const startGame = useCallback(() => {
     clearLetterStates();
@@ -104,14 +105,14 @@ function App() {
   useEffect(() => {
     const uniqueLetters = [... new Set(letters)];/*array de letras únicas.
     usuário não precisa digitar 2 vezes a mesma letra na palavra*/
-
+    
     //condição de vitória
     if (guessedLetters.length === uniqueLetters.length && gameStage===stages[1].name) {
       setScore((actualScore) => actualScore += 100);
       startGame();
     }
 
-  },[guessedLetters,letters,startGame])
+  },[guessedLetters,letters,startGame,gameStage])
 
   const retry = () => {
     setGuesses(guessesQty);
