@@ -25,6 +25,8 @@
     color: var(--global-color2);
 }
 
+.obs{font-size: .8rem;font-weight: bold;}
+
 .word_container {
     margin: .5rem;
     padding: 1rem;
