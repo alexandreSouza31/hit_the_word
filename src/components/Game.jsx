@@ -23,6 +23,7 @@ const Game = ({ verifyLetter, pickedWord, pickedCategory, letters, guessedLetter
             <h3 className="tip">
                 Dica sobre a palavra: <span>{pickedCategory}</span>
             </h3>
+            <p className="obs">obs: Não esqueça dos acentos!</p>
             <p>Você ainda tem {guesses} tentativa(s).</p>
             <div className="word_container">
                 {letters.map((letter, i) => (
