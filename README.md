@@ -66,6 +66,9 @@ Step 2 - Installing dependencies
 Step 3 - Starting the project
 1- Type npm run dev (without quotes) in the terminal; 2- Wait until a localhost address is shown in the terminal (localhost:5500/' or equivalent); 3- Copy the address and paste it in the browser, or hold the CTRL key and click on the address in the terminal.
 
+Deploy
+If you want to test the app without downloading the code:
+
 - [Vercel](https://hit-the-word.vercel.app/)
 
  :)
